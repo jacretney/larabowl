@@ -19717,9 +19717,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.resetErrors && $options.resetErrors.apply($options, arguments);
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_defineProperty({
-      'border-red-500': this.validationMessage
-    }, $props.classes, $props.classes)),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_defineProperty({
+      'border-red-500': this.validationMessage,
+      'border-gray-400': !this.validationMessage
+    }, $props.classes, $props.classes), "rounded-md"]),
     placeholder: $props.placeHolder
   }, null, 42
   /* CLASS, PROPS, HYDRATE_EVENTS */

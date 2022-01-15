@@ -4,8 +4,10 @@
         @input="resetErrors"
         :class="{
             'border-red-500': this.validationMessage,
+            'border-gray-400': !this.validationMessage,
             [classes]: classes
         }"
+        class="rounded-md"
         :placeholder="placeHolder"
     >
 

@@ -8,22 +8,6 @@ use Tests\TestCase;
 
 class FrameControllerTest extends TestCase
 {
-    public function testCanCreateAFrame()
-    {
-        $game = Game::factory()->create();
-
-        $response = $this->post(route('api.game.frame.create', [
-            'game' => $game->id,
-        ]));
-
-        $response->assertJsonFragment([
-            'game_id' => $game->id,
-            'throw_one_score' => null,
-            'throw_two_score' => null,
-            'throw_three_score' => null,
-        ]);
-    }
-
     public function testCanSetThrowOneScore():void
     {
         $frame = Frame::factory()

@@ -18,19 +18,6 @@ class FrameController extends Controller
         $this->frameService = $frameService;
     }
 
-    public function create(Game $game): JsonResponse
-    {
-        $frame = $this->frameService->createFrame($game);
-
-        return $this->respond([
-            'id' => $frame->id,
-            'game_id' => $frame->game_id,
-            'throw_one_score' => $frame->throw_one_score,
-            'throw_two_score' => $frame->throw_two_score,
-            'throw_three_score' => $frame->throw_three_score,
-        ], 201);
-    }
-
     /**
      * @throws DomainException
      */

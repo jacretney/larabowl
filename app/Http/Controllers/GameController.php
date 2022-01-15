@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Frame;
 use App\Models\Game;
 use App\Services\GameService;
 use Illuminate\Http\JsonResponse;
@@ -23,6 +24,14 @@ class GameController extends Controller
         return $this->respond([
             'id' => $game->id,
             'name' => $game->name,
+            'frames' => $game->frames->map(function (Frame $frame) {
+                return [
+                    'frame_number' => $frame->frame_number,
+                    'throw_one_score' => $frame->throw_one_score,
+                    'throw_two_score' => $frame->throw_two_score,
+                    'throw_three_score' => $frame->throw_three_score,
+                ];
+            })
         ]);
     }
 
@@ -31,6 +40,14 @@ class GameController extends Controller
         return $this->respond([
             'id' => $game->id,
             'name' => $game->name,
+            'frames' => $game->frames->map(function (Frame $frame) {
+                return [
+                    'frame_number' => $frame->frame_number,
+                    'throw_one_score' => $frame->throw_one_score,
+                    'throw_two_score' => $frame->throw_two_score,
+                    'throw_three_score' => $frame->throw_three_score,
+                ];
+            })
         ]);
     }
 }

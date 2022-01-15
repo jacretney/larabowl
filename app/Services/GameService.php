@@ -6,6 +6,10 @@ use App\Models\Game;
 
 class GameService
 {
+    public function __construct(
+        private FrameService $frameService,
+    ){}
+
     public function createGame(string $name): Game
     {
         $game = new Game([
@@ -13,6 +17,8 @@ class GameService
         ]);
 
         $game->save();
+
+        $this->frameService->generateFramesForGame($game);
 
         return $game;
     }

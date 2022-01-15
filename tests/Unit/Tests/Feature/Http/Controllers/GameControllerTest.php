@@ -15,10 +15,11 @@ class GameControllerTest extends TestCase
             'game' => $game->id,
         ]));
 
-        $response->assertJsonFragment([
-            'id' => $game->id,
-            'name' => $game->name,
-        ]);
+        $response
+            ->assertJsonFragment([
+                'id' => $game->id,
+                'name' => $game->name,
+            ]);
     }
 
     public function testCanCreateAGame():void
@@ -27,8 +28,10 @@ class GameControllerTest extends TestCase
             'name' => 'A cool game',
         ]);
 
-        $response->assertJsonFragment([
-            'name' => 'A cool game',
-        ]);
+        $response
+            ->assertJsonFragment([
+                'name' => 'A cool game',
+            ])
+            ->assertJsonCount(10, 'data.frames');
     }
 }

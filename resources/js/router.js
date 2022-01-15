@@ -1,10 +1,10 @@
 import Home from "./pages/Home";
-import About from "./pages/About";
+import Game from "./pages/Game";
 const VueRouter = require('vue-router');
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/about', component: About },
+    { path: '/game/:game', component: Game },
 ]
 
 export const Router = VueRouter.createRouter({

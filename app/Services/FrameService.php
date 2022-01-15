@@ -4,14 +4,28 @@ namespace App\Services;
 
 use App\Models\Frame;
 use App\Models\Game;
+use Illuminate\Support\Collection;
 
 class FrameService
 {
-    public function createFrame(Game $game): Frame
+    private const FRAME_COUNT = 10;
+
+    public function generateFramesForGame(Game $game): Collection
     {
-        return new Frame([
-            'game_id' => $game->id,
-        ]);
+        $frames = new Collection();
+
+        for ($i = 1; $i <= self::FRAME_COUNT; $i++) {
+            $frame = new Frame([
+                'game_id' => $game->id,
+                'frame_number' => $i,
+            ]);
+
+            $frame->save();
+
+            $frames->push($frame);
+        }
+
+        return $frames;
     }
 
     public function setThrowOneScore(Frame $frame, int $score): Frame

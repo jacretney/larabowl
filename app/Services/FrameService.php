@@ -38,6 +38,8 @@ class FrameService
 
     public function setThrowThreeScore(Frame $frame, int $score): Frame
     {
+//        dd($frame->throw_one_score + $frame->throw_two_score);
+
         if ($frame->throw_one_score + $frame->throw_two_score !== 10) {
             return $frame;
         }

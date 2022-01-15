@@ -54,6 +54,6 @@ class Frame extends Model
 
     public function game(): BelongsTo
     {
-        return $this->belongsTo(Game::class, 'id', 'game_id');
+        return $this->belongsTo(Game::class);
     }
 }

@@ -2,6 +2,11 @@
 
 @section('content')
     <div id="app">
-        <page-home></page-home>
+        <p>
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+        </p>
+
+        <router-view></router-view>
     </div>
 @endsection

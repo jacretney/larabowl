@@ -1,15 +1,18 @@
 require('./bootstrap');
 
-import * as Vue from 'vue/dist/vue.esm-browser';
+const Vue = require('vue');
+import {Router} from './router';
 
-import HomeComponent from "./pages/home/HomeComponent";
+/**
+ * Create app
+ */
 
-const RootComponent = {
-    /* options */
-}
+const app = Vue.createApp({});
 
-const app = Vue.createApp(RootComponent);
+/**
+ * Mount app
+ */
 
-app.component('page-home', HomeComponent);
+app.use(Router);
 
 const vm = app.mount('#app');

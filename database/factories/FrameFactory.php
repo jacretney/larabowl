@@ -15,7 +15,7 @@ class FrameFactory extends Factory
     public function definition()
     {
         $throwOne = $this->faker->numberBetween(0, 11);
-        $throwTwo = $this->faker->numberBetween(0, 10 - $throwOne) ?: null;
+        $throwTwo = $throwOne === 10 ? $this->faker->numberBetween(0, 10 - $throwOne) : null;
 
         return [
             'game_id' => fn () => Game::factory(),

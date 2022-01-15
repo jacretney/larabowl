@@ -56,8 +56,10 @@
                     return;
                 }
 
+                this.gameForm.name.error = null;
+
                 axios.post('/api/game/', {
-                    name: this.gameForm.name,
+                    name: this.gameForm.name.value,
                 }).then((response) => {
                     this.$router.push(`/game/${response.data.data.id}`);
                 }).finally();

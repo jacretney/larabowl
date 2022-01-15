@@ -1,7 +1,7 @@
 <template>
     <input
+        @input="handleInput"
         type="text"
-        @input="resetErrors"
         :class="{
             'border-red-500': this.validationMessage,
             'border-gray-400': !this.validationMessage,
@@ -17,6 +17,10 @@
 <script>
 export default {
     props: {
+        modelValue: {
+            type: String,
+            default: null,
+        },
         classes: {
             type: String,
             default: null
@@ -30,11 +34,18 @@ export default {
             default: null
         }
     },
+    emits: ['update:modelValue'],
+
+    data () {
+        return {
+            content: this.modelValue
+        }
+    },
 
     methods: {
-        resetErrors() {
-            this.error = null;
-        },
+        handleInput (e) {
+            this.$emit('update:modelValue', e.target.value)
+        }
     }
 }
 </script>

@@ -19466,6 +19466,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    modelValue: {
+      type: String,
+      "default": null
+    },
     classes: {
       type: String,
       "default": null
@@ -19479,9 +19483,15 @@ __webpack_require__.r(__webpack_exports__);
       "default": null
     }
   },
+  emits: ['update:modelValue'],
+  data: function data() {
+    return {
+      content: this.modelValue
+    };
+  },
   methods: {
-    resetErrors: function resetErrors() {
-      this.error = null;
+    handleInput: function handleInput(e) {
+      this.$emit('update:modelValue', e.target.value);
     }
   }
 });
@@ -19563,8 +19573,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      this.gameForm.name.error = null;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/game/', {
-        name: this.gameForm.name
+        name: this.gameForm.name.value
       }).then(function (response) {
         _this.$router.push("/game/".concat(response.data.data.id));
       })["finally"]();
@@ -19713,10 +19724,10 @@ var _hoisted_2 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "text",
     onInput: _cache[0] || (_cache[0] = function () {
-      return $options.resetErrors && $options.resetErrors.apply($options, arguments);
+      return $options.handleInput && $options.handleInput.apply($options, arguments);
     }),
+    type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_defineProperty({
       'border-red-500': this.validationMessage,
       'border-gray-400': !this.validationMessage

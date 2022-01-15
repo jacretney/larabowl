@@ -17,20 +17,22 @@ class FrameControllerTest extends TestCase
                 'throw_two_score' => null,
             ]);
 
-
         $response = $this->post(route('api.game.frame.set-score', [
             'frame' => $frame->id,
+            'game' => $frame->game->id,
         ]), [
             'throw' => 1,
             'score' => 5,
         ]);
 
-        $response->assertJsonFragment([
-            'game_id' => $frame->game->id,
-            'throw_one_score' => 5,
-            'throw_two_score' => null,
-            'throw_three_score' => null,
-        ]);
+        $response
+            ->assertOk()
+            ->assertJsonFragment([
+                'game_id' => $frame->game->id,
+                'throw_one_score' => 5,
+                'throw_two_score' => null,
+                'throw_three_score' => null,
+            ]);
     }
 
     public function testCanSetThrowTwoScore():void
@@ -45,17 +47,20 @@ class FrameControllerTest extends TestCase
 
         $response = $this->post(route('api.game.frame.set-score', [
             'frame' => $frame->id,
+            'game' => $frame->game->id,
         ]), [
             'throw' => 2,
             'score' => 5,
         ]);
 
-        $response->assertJsonFragment([
-            'game_id' => $frame->game->id,
-            'throw_one_score' => 3,
-            'throw_two_score' => 5,
-            'throw_three_score' => null,
-        ]);
+        $response
+            ->assertOk()
+            ->assertJsonFragment([
+                'game_id' => $frame->game->id,
+                'throw_one_score' => 3,
+                'throw_two_score' => 5,
+                'throw_three_score' => null,
+            ]);
     }
 
     public function testCanSetThrowThreeScore():void
@@ -69,16 +74,19 @@ class FrameControllerTest extends TestCase
 
         $response = $this->post(route('api.game.frame.set-score', [
             'frame' => $frame->id,
+            'game' => $frame->game->id,
         ]), [
             'throw' => 3,
             'score' => 5,
         ]);
 
-        $response->assertJsonFragment([
-            'game_id' => $frame->game->id,
-            'throw_one_score' => 8,
-            'throw_two_score' => 2,
-            'throw_three_score' => 5,
-        ]);
+        $response
+            ->assertOk()
+            ->assertJsonFragment([
+                'game_id' => $frame->game->id,
+                'throw_one_score' => 8,
+                'throw_two_score' => 2,
+                'throw_three_score' => 5,
+            ]);
     }
 }

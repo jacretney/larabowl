@@ -1,7 +1,7 @@
 <template>
     <div
         :class="classes"
-        class="bg-white rounded-md drop-shadow-md"
+        class="bg-white rounded-md drop-shadow-md my-6"
     >
         <div class="mb-2 border-b-2 border-b-gray-100">
             <h2 class="text-lg py-4 mx-4">

@@ -19542,8 +19542,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
 /* harmony import */ var _components_MainContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MainContent */ "./resources/js/components/MainContent.vue");
-/* harmony import */ var _components_ui_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/Card */ "./resources/js/components/ui/Card.vue");
-/* harmony import */ var _components_tables_GameTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/tables/GameTable */ "./resources/js/components/tables/GameTable.vue");
+/* harmony import */ var _components_ui_Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/Input */ "./resources/js/components/ui/Input.vue");
+/* harmony import */ var _components_ui_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/ui/Button */ "./resources/js/components/ui/Button.vue");
+/* harmony import */ var _components_ui_Card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/ui/Card */ "./resources/js/components/ui/Card.vue");
+/* harmony import */ var _components_tables_GameTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/tables/GameTable */ "./resources/js/components/tables/GameTable.vue");
+
+
 
 
 
@@ -19552,13 +19556,21 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
     MainContent: _components_MainContent__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Card: _components_ui_Card__WEBPACK_IMPORTED_MODULE_2__["default"],
-    GameTable: _components_tables_GameTable__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Input: _components_ui_Input__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Button: _components_ui_Button__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Card: _components_ui_Card__WEBPACK_IMPORTED_MODULE_4__["default"],
+    GameTable: _components_tables_GameTable__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
       gameId: this.$route.params.game,
-      game: null
+      game: null,
+      scoreForm: {
+        score: {
+          value: null,
+          error: null
+        }
+      }
     };
   },
   mounted: function mounted() {
@@ -19571,6 +19583,27 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/game/".concat(this.gameId)).then(function (response) {
         _this.game = response.data.data;
       });
+    },
+    submitScore: function submitScore() {
+      var _this2 = this;
+
+      axios.post("/api/game/".concat(this.gameId, "/frame/").concat(this.currentFrame.id), {
+        'throw': this.getThrowNumber(this.currentFrame),
+        'score': this.scoreForm.score.value
+      }).then(function (response) {
+        _this2.game.frames = response.data.data.frames;
+      });
+    },
+    getThrowNumber: function getThrowNumber(frame) {
+      if (frame.throw_one_score === null) {
+        return 1;
+      }
+
+      if (frame.throw_two_score === null) {
+        return 2;
+      }
+
+      return 3;
     }
   },
   computed: {
@@ -19828,7 +19861,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$props.classes, "bg-white rounded-md drop-shadow-md"])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$props.classes, "bg-white rounded-md drop-shadow-md my-6"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "header", {}, function () {
     return [_hoisted_3];
   })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "body", {}, function () {
@@ -19898,6 +19931,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Game status: In progress ");
 
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Update score ");
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Player: Player one", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -19906,6 +19945,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_GameTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("GameTable");
 
   var _component_Card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Card");
+
+  var _component_Input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Input");
+
+  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
   var _component_MainContent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MainContent");
 
@@ -19936,7 +19979,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      })];
+      }), _this.game ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Card, {
+        key: 0,
+        classes: "w-1/2"
+      }, {
+        header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_2];
+        }),
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Frame: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.currentFrame.frame_number), 1
+          /* TEXT */
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Throw: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getThrowNumber(_this.currentFrame)), 1
+          /* TEXT */
+          ), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
+            "place-holder": "Enter a score",
+            classes: "w-full mt-3",
+            "validation-message": $data.scoreForm.score.error,
+            modelValue: $data.scoreForm.score.value,
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+              return $data.scoreForm.score.value = $event;
+            })
+          }, null, 8
+          /* PROPS */
+          , ["validation-message", "modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+            text: "Submit score",
+            onClick: $options.submitScore
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */

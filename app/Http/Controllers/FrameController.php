@@ -21,8 +21,12 @@ class FrameController extends Controller
     /**
      * @throws DomainException
      */
-    public function setScore(Request $request, Frame $frame): JsonResponse
+    public function setScore(Request $request, Game $game, Frame $frame): JsonResponse
     {
+        if ($frame->game->id !== $game->id) {
+            return $this->respond([], 400);
+        }
+
         $throw = $request->input('throw', 1);
         $score = $request->input('score', 0);
 
@@ -34,11 +38,17 @@ class FrameController extends Controller
         };
 
         return $this->respond([
-            'id' => $frame->id,
-            'game_id' => $frame->game_id,
-            'throw_one_score' => $frame->throw_one_score,
-            'throw_two_score' => $frame->throw_two_score,
-            'throw_three_score' => $frame->throw_three_score,
+            'id' => $game->id,
+            'name' => $game->name,
+            'frames' => $game->frames->map(function (Frame $frame) {
+                return [
+                    'id' => $frame->id,
+                    'frame_number' => $frame->frame_number,
+                    'throw_one_score' => $frame->throw_one_score,
+                    'throw_two_score' => $frame->throw_two_score,
+                    'throw_three_score' => $frame->throw_three_score,
+                ];
+            })
         ]);
     }
 }

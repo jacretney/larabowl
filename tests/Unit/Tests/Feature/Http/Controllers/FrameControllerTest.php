@@ -83,7 +83,6 @@ class FrameControllerTest extends TestCase
                 'throw_two_score' => 2,
             ]);
 
-
         $response = $this->post(route('api.game.frame.set-score', [
             'frame' => $frame->id,
         ]), [

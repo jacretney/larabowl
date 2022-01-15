@@ -8,8 +8,12 @@ class GameService
 {
     public function createGame(string $name): Game
     {
-        return new Game([
-            'name' => $name,
+        $game = new Game([
+           'name' => $name,
         ]);
+
+        $game->save();
+
+        return $game;
     }
 }

@@ -18,6 +18,12 @@
                                     >
                                         Home
                                     </router-link>
+                                    <router-link
+                                        class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page"
+                                        to="/about"
+                                    >
+                                        About
+                                    </router-link>
                                 </div>
                             </div>
                         </div>

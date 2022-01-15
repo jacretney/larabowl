@@ -19416,7 +19416,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
+/* harmony import */ var _components_MainContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MainContent */ "./resources/js/components/MainContent.vue");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
+    MainContent: _components_MainContent__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
 
 /***/ }),
 
@@ -19431,14 +19440,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
-/* harmony import */ var _components_MainContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MainContent */ "./resources/js/components/MainContent.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
+/* harmony import */ var _components_MainContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/MainContent */ "./resources/js/components/MainContent.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
-    MainContent: _components_MainContent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Header: _components_Header__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MainContent: _components_MainContent__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      gameForm: {
+        name: null
+      },
+      error: null
+    };
+  },
+  methods: {
+    resetErrors: function resetErrors() {
+      this.error = null;
+    },
+    createGame: function createGame() {
+      var _this = this;
+
+      this.error = null;
+
+      if (!this.gameForm.name) {
+        this.error = 'Please enter a name for your game';
+        return;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/game/', {
+        name: this.gameForm.name
+      }).then(function (response) {
+        _this.$router.push("/game/".concat(response.data.data.id));
+      })["finally"]();
+    }
   }
 });
 
@@ -19507,8 +19548,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" About ");
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" This is our about page ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", null, "About page");
+  var _component_Header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Header");
+
+  var _component_MainContent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MainContent");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Header, null, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_1];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MainContent, null, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_2];
+    }),
+    _: 1
+    /* STABLE */
+
+  })], 64
+  /* STABLE_FRAGMENT */
+  );
 }
 
 /***/ }),
@@ -19527,11 +19593,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Get started! ");
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Home ");
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Hey there ");
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "text-lg my-4"
+}, "Start a new game", -1
+/* HOISTED */
+);
 
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_4 = {
+  key: 0,
+  "class": "text-red-500"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Header");
 
   var _component_MainContent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MainContent");
@@ -19545,7 +19625,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MainContent, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_2];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.gameForm.name = $event;
+        }),
+        onInput: _cache[1] || (_cache[1] = function () {
+          return $options.resetErrors && $options.resetErrors.apply($options, arguments);
+        }),
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_this.error ? 'border-red-500' : ''),
+        placeholder: "Jim's birthday"
+      }, null, 34
+      /* CLASS, HYDRATE_EVENTS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.gameForm.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        "class": "py-3 px-3 my-4 mx-4 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-700 cursor-pointer",
+        onClick: _cache[2] || (_cache[2] = function () {
+          return $options.createGame && $options.createGame.apply($options, arguments);
+        })
+      }, "Create new game")]), _hoisted_3, _this.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.error), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
@@ -41079,6 +41178,18 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

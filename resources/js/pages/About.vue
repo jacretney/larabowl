@@ -1,9 +1,20 @@
 <template>
-    <h1>About page</h1>
+    <Header>
+        About
+    </Header>
+    <MainContent>
+        This is our about page
+    </MainContent>
 </template>
 
 <script>
-    export default {
+import Header from '../components/Header';
+import MainContent from '../components/MainContent';
 
+export default {
+    components: {
+        Header,
+        MainContent,
     }
+}
 </script>

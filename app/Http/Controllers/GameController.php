@@ -23,7 +23,7 @@ class GameController extends Controller
         return $this->respond([
             'id' => $game->id,
             'name' => $game->name,
-        ], 201);
+        ]);
     }
 
     public function get(Game $game): JsonResponse

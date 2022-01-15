@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Frame;
+use App\Models\Game;
 
 class FrameService
 {

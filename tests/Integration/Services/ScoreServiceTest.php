@@ -221,4 +221,51 @@ class ScoreServiceTest extends TestCase
         $score = $this->scoreService->calculateSpareScore($frame);
         $this->assertEquals(17, $score);
     }
+
+    public function testCalculateScoreReturnsAFrameScoreForAStrike():void
+    {
+        $game = Game::factory()->create();
+        $frame = Frame::factory()
+            ->for($game)
+            ->create([
+                'throw_one_score' => 10,
+            ]);
+
+        $score = $this->scoreService->calculcateScore($frame);
+        $this->assertEquals(10, $score->score);
+        $this->assertTrue($score->isStrike);
+        $this->assertFalse($score->isSpare);
+    }
+
+    public function testCalculateScoreReturnsAFrameScoreForASpare():void
+    {
+        $game = Game::factory()->create();
+        $frame = Frame::factory()
+            ->for($game)
+            ->create([
+                'throw_one_score' => 5,
+                'throw_two_score' => 5,
+            ]);
+
+        $score = $this->scoreService->calculcateScore($frame);
+        $this->assertEquals(10, $score->score);
+        $this->assertTrue($score->isSpare);
+        $this->assertFalse($score->isStrike);
+    }
+
+    public function testCalculateScoreReturnsAFrameScoreForANormalScore():void
+    {
+        $game = Game::factory()->create();
+        $frame = Frame::factory()
+            ->for($game)
+            ->create([
+                'throw_one_score' => 5,
+                'throw_two_score' => 3,
+            ]);
+
+        $score = $this->scoreService->calculcateScore($frame);
+        $this->assertEquals(8, $score->score);
+        $this->assertFalse($score->isSpare);
+        $this->assertFalse($score->isStrike);
+    }
 }

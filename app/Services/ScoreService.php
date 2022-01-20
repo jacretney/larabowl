@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Frame;
+use App\ValueObjects\FrameScore;
 use Illuminate\Support\Arr;
 
 class ScoreService
@@ -42,16 +43,24 @@ class ScoreService
         return $frame->getScore() + $nextFrame?->throw_one_score;
     }
 
-    public function calculcateScore(Frame $frame): int
+    public function calculcateScore(Frame $frame): FrameScore
     {
+        $score = new FrameScore();
+
         if ($frame->isStrike()) {
-            return $this->calculateStrikeScore($frame);
+            $score->setIsStrike();
+            $score->setScore($this->calculateStrikeScore($frame));
         }
 
         if ($frame->isSpare()) {
-            return $this->calculateSpareScore($frame);
+            $score->setIsSpare();
+            $score->setScore($this->calculateSpareScore($frame));
         }
 
-        return $frame->getScore();
+        if (! $frame->isStrike() && ! $frame->isSpare()) {
+            $score->setScore($frame->getScore());
+        }
+
+        return $score;
     }
 }

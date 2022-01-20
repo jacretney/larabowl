@@ -49,17 +49,21 @@ class ScoreService
 
         if ($frame->isStrike()) {
             $score->setIsStrike();
-            $score->setScore($this->calculateStrikeScore($frame));
+            $score->setOverallScore($this->calculateStrikeScore($frame));
         }
 
         if ($frame->isSpare()) {
             $score->setIsSpare();
-            $score->setScore($this->calculateSpareScore($frame));
+            $score->setOverallScore($this->calculateSpareScore($frame));
         }
 
         if (! $frame->isStrike() && ! $frame->isSpare()) {
-            $score->setScore($frame->getScore());
+            $score->setOverallScore($frame->getScore());
         }
+
+        $score->setThrowOneScore($frame->throw_one_score);
+        $score->setThrowTwoScore($frame->throw_two_score);
+        $score->setThrowThreeScore($frame->throw_three_score);
 
         return $score;
     }

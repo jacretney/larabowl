@@ -4,16 +4,12 @@ namespace App\ValueObjects;
 
 class FrameScore
 {
-    public bool $isStrike;
-    public bool $isSpare;
-    public int $score;
-
-    public function __construct(bool $isStrike = false, bool $isSpare = false, int $score = 0)
-    {
-        $this->isStrike = $isStrike;
-        $this->isSpare = $isSpare;
-        $this->score = $score;
-    }
+    public bool $isStrike = false;
+    public bool $isSpare = false;
+    public int $overallScore = 0;
+    public ?int $throwOneScore = null;
+    public ?int $throwTwoScore = null;
+    public ?int $throwThreeScore = null;
 
     public function setIsStrike(bool $isStrike = true): self
     {
@@ -35,25 +31,43 @@ class FrameScore
         return $this;
     }
 
-    public function setScore(int $score = 0): self
+    public function setOverallScore(int $overallScore = 0): self
     {
-        if ($score < 0) {
+        if ($overallScore < 0) {
             throw new \DomainException('Score cannot be less than 0');
         }
 
-        if ($this->isStrike && $score > 30) {
+        if ($this->isStrike && $overallScore > 30) {
             throw new \DomainException('Score for a strike cannot be over 30');
         }
 
-        if ($this->isSpare && $score > 20) {
+        if ($this->isSpare && $overallScore > 20) {
             throw new \DomainException('Score for a spare cannot be over 20');
         }
 
-        if (! $this->isSpare && ! $this->isStrike && $score > 10) {
+        if (! $this->isSpare && ! $this->isStrike && $overallScore > 10) {
             throw new \DomainException('Score cannot be over 10');
         }
 
-        $this->score = $score;
+        $this->overallScore = $overallScore;
+        return $this;
+    }
+
+    public function setThrowOneScore($score = 0): self
+    {
+        $this->throwOneScore = $score;
+        return $this;
+    }
+
+    public function setThrowTwoScore($score = 0): self
+    {
+        $this->throwTwoScore = $score;
+        return $this;
+    }
+
+    public function setThrowThreeScore($score = 0): self
+    {
+        $this->throwThreeScore = $score;
         return $this;
     }
 }

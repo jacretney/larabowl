@@ -232,7 +232,7 @@ class ScoreServiceTest extends TestCase
             ]);
 
         $score = $this->scoreService->calculcateScore($frame);
-        $this->assertEquals(10, $score->score);
+        $this->assertEquals(10, $score->overallScore);
         $this->assertTrue($score->isStrike);
         $this->assertFalse($score->isSpare);
     }
@@ -248,7 +248,7 @@ class ScoreServiceTest extends TestCase
             ]);
 
         $score = $this->scoreService->calculcateScore($frame);
-        $this->assertEquals(10, $score->score);
+        $this->assertEquals(10, $score->overallScore);
         $this->assertTrue($score->isSpare);
         $this->assertFalse($score->isStrike);
     }
@@ -264,7 +264,7 @@ class ScoreServiceTest extends TestCase
             ]);
 
         $score = $this->scoreService->calculcateScore($frame);
-        $this->assertEquals(8, $score->score);
+        $this->assertEquals(8, $score->overallScore);
         $this->assertFalse($score->isSpare);
         $this->assertFalse($score->isStrike);
     }

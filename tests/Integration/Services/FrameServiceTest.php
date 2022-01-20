@@ -5,6 +5,7 @@ namespace Tests\Integration\Services;
 use App\Models\Frame;
 use App\Models\Game;
 use App\Services\FrameService;
+use App\Services\ScoreService;
 use Tests\TestCase;
 
 class FrameServiceTest extends TestCase
@@ -15,7 +16,7 @@ class FrameServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->frameService = new FrameService();
+        $this->frameService = new FrameService(new ScoreService());
     }
 
     public function testCanCreateFramesForGame():void

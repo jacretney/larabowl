@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Frame;
 use App\Models\Game;
 use Tests\TestCase;
+use function route;
 
 class FrameControllerTest extends TestCase
 {

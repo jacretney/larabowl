@@ -34,6 +34,8 @@
                     <p>{{ frame.throw_two_score ?? '-' }}</p>
                     <p>{{ frame.throw_three_score ?? '-' }}</p>
                 </div>
+
+                <p>{{ this.calculateRollingScore(frame) ?? '-' }}</p>
             </td>
         </tr>
         </tbody>
@@ -56,6 +58,31 @@ export default {
     methods: {
         isCurrentFrame(frame) {
             return frame.frame_number === this.currentFrame.frame_number;
+        },
+
+        calculateRollingScore(currentFrame) {
+            const frameNumber = currentFrame.frame_number - 1;
+
+            if (frameNumber === 0) {
+                currentFrame.rolling_score = currentFrame.overall_score;
+                return currentFrame.rolling_score;
+            }
+
+            if (currentFrame.throw_one_score === null) {
+                return null;
+            }
+
+            const previousFrame = this.game.frames.filter((frame) => {
+                return frame.frame_number === frameNumber;
+            })[0];
+
+            if (previousFrame.throw_one_score === null) {
+                return null;
+            }
+
+            currentFrame.rolling_score = previousFrame.rolling_score + currentFrame.overall_score;
+
+            return currentFrame.rolling_score;
         }
     }
 }

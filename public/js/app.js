@@ -19430,6 +19430,29 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     isCurrentFrame: function isCurrentFrame(frame) {
       return frame.frame_number === this.currentFrame.frame_number;
+    },
+    calculateRollingScore: function calculateRollingScore(currentFrame) {
+      var frameNumber = currentFrame.frame_number - 1;
+
+      if (frameNumber === 0) {
+        currentFrame.rolling_score = currentFrame.overall_score;
+        return currentFrame.rolling_score;
+      }
+
+      if (currentFrame.throw_one_score === null) {
+        return null;
+      }
+
+      var previousFrame = this.game.frames.filter(function (frame) {
+        return frame.frame_number === frameNumber;
+      })[0];
+
+      if (previousFrame.throw_one_score === null) {
+        return null;
+      }
+
+      currentFrame.rolling_score = previousFrame.rolling_score + currentFrame.overall_score;
+      return currentFrame.rolling_score;
     }
   }
 });
@@ -19771,6 +19794,8 @@ var _hoisted_5 = {
   "class": "grid grid-cols-3 grid-rows-1"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" TODO: Add a foreach for players "), this.game ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_2, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.game.frames, function (frame) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($options.isCurrentFrame(frame) ? 'bg-green-300' : null)
@@ -19780,7 +19805,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 256
   /* UNKEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.game.frames, function (frame) {
-    var _frame$throw_one_scor, _frame$throw_two_scor, _frame$throw_one_scor2, _frame$throw_two_scor2, _frame$throw_three_sc;
+    var _frame$throw_one_scor, _frame$throw_two_scor, _frame$throw_one_scor2, _frame$throw_two_scor2, _frame$throw_three_sc, _this$calculateRollin;
 
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($options.isCurrentFrame(frame) ? 'bg-green-300' : null)
@@ -19794,7 +19819,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_frame$throw_three_sc = frame.throw_three_score) !== null && _frame$throw_three_sc !== void 0 ? _frame$throw_three_sc : '-'), 1
     /* TEXT */
-    )]))], 2
+    )])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_this$calculateRollin = _this.calculateRollingScore(frame)) !== null && _this$calculateRollin !== void 0 ? _this$calculateRollin : '-'), 1
+    /* TEXT */
+    )], 2
     /* CLASS */
     );
   }), 256

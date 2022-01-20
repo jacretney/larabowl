@@ -10,6 +10,7 @@ class FrameScore
     public ?int $throwOneScore = null;
     public ?int $throwTwoScore = null;
     public ?int $throwThreeScore = null;
+    public ?int $rollingScore = null;
 
     public function setIsStrike(bool $isStrike = true): self
     {
@@ -68,6 +69,12 @@ class FrameScore
     public function setThrowThreeScore($score = 0): self
     {
         $this->throwThreeScore = $score;
+        return $this;
+    }
+
+    public function setRollingScore($score = 0): self
+    {
+        $this->rollingScore = $score;
         return $this;
     }
 }

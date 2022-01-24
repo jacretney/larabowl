@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GameResource;
 use App\Models\Frame;
 use App\Models\Game;
 use App\Services\FrameService;
@@ -18,40 +19,25 @@ class FrameController extends Controller
         $this->frameService = $frameService;
     }
 
-    public function create(Game $game): JsonResponse
-    {
-        $frame = $this->frameService->createFrame($game);
-
-        return $this->respond([
-            'id' => $frame->id,
-            'game_id' => $frame->game_id,
-            'throw_one_score' => $frame->throw_one_score,
-            'throw_two_score' => $frame->throw_two_score,
-            'throw_three_score' => $frame->throw_three_score,
-        ], 201);
-    }
-
     /**
      * @throws DomainException
      */
-    public function setScore(Request $request, Frame $frame): JsonResponse
+    public function setScore(Request $request, Game $game, Frame $frame): JsonResponse
     {
+        if ($frame->game->id !== $game->id) {
+            return $this->respond([], 400);
+        }
+
         $throw = $request->input('throw', 1);
         $score = $request->input('score', 0);
 
-        $frame = match ($throw) {
+        match ($throw) {
             1 => $this->frameService->setThrowOneScore($frame, $score),
             2 => $this->frameService->setThrowTwoScore($frame, $score),
             3 => $this->frameService->setThrowThreeScore($frame, $score),
             default => throw new DomainException('Unexpected match value'),
         };
 
-        return $this->respond([
-            'id' => $frame->id,
-            'game_id' => $frame->game_id,
-            'throw_one_score' => $frame->throw_one_score,
-            'throw_two_score' => $frame->throw_two_score,
-            'throw_three_score' => $frame->throw_three_score,
-        ]);
+        return $this->respond(new GameResource($game));
     }
 }

@@ -4,14 +4,30 @@ namespace App\Services;
 
 use App\Models\Frame;
 use App\Models\Game;
+use Illuminate\Support\Collection;
 
 class FrameService
 {
-    public function createFrame(Game $game): Frame
+    public function __construct(private ScoreService $scoreService) {}
+
+    private const FRAME_COUNT = 10;
+
+    public function generateFramesForGame(Game $game): Collection
     {
-        return new Frame([
-            'game_id' => $game->id,
-        ]);
+        $frames = new Collection();
+
+        for ($i = 1; $i <= self::FRAME_COUNT; $i++) {
+            $frame = new Frame([
+                'game_id' => $game->id,
+                'frame_number' => $i,
+            ]);
+
+            $frame->save();
+
+            $frames->push($frame);
+        }
+
+        return $frames;
     }
 
     public function setThrowOneScore(Frame $frame, int $score): Frame
@@ -38,8 +54,6 @@ class FrameService
 
     public function setThrowThreeScore(Frame $frame, int $score): Frame
     {
-//        dd($frame->throw_one_score + $frame->throw_two_score);
-
         if ($frame->throw_one_score + $frame->throw_two_score !== 10) {
             return $frame;
         }
@@ -49,5 +63,18 @@ class FrameService
         ]);
 
         return $frame;
+    }
+
+    public function calculateScore(Frame $frame): ?int
+    {
+        if ($frame->isStrike()) {
+            return $this->scoreService->calculateStrikeScore($frame);
+        }
+
+        if ($frame->isSpare()) {
+            return $this->scoreService->calculateSpareScore($frame);
+        }
+
+        return $this->scoreService->calculcateScore($frame);
     }
 }

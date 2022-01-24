@@ -6,10 +6,20 @@ use App\Models\Game;
 
 class GameService
 {
+    public function __construct(
+        private FrameService $frameService,
+    ){}
+
     public function createGame(string $name): Game
     {
-        return new Game([
-            'name' => $name,
+        $game = new Game([
+           'name' => $name,
         ]);
+
+        $game->save();
+
+        $this->frameService->generateFramesForGame($game);
+
+        return $game;
     }
 }

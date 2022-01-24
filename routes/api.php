@@ -22,7 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group([
     'as' => 'api.',
-    'prefix' => 'api',
 ], function() {
     Route::group([
         'as' => 'game.',
@@ -31,13 +30,7 @@ Route::group([
         Route::get('/{game}', [GameController::class, 'get'])->name('get');
         Route::post('/', [GameController::class, 'create'])->name('create');
 
-        Route::group([
-            'as' => 'frame.',
-            'prefix' => 'frame',
-        ], function() {
-            Route::post('/{game}', [FrameController::class, 'create'])->name('create');
-            Route::post('/frames/{frame}', [FrameController::class, 'setScore'])->name('set-score');
-        });
+        Route::post('/{game}/frame/{frame}', [FrameController::class, 'setScore'])->name('frame.set-score');
     });
 });
 

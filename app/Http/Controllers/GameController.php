@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GameResource;
+use App\Models\Frame;
 use App\Models\Game;
 use App\Services\GameService;
 use Illuminate\Http\JsonResponse;
@@ -20,17 +22,11 @@ class GameController extends Controller
     {
         $game = $this->gameService->createGame($request->input('name'));
 
-        return $this->respond([
-            'id' => $game->id,
-            'name' => $game->name,
-        ], 201);
+        return $this->respond(new GameResource($game));
     }
 
     public function get(Game $game): JsonResponse
     {
-        return $this->respond([
-            'id' => $game->id,
-            'name' => $game->name,
-        ]);
+        return $this->respond(new GameResource($game));
     }
 }

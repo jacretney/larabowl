@@ -41,7 +41,7 @@ class FrameService
 
     public function setThrowTwoScore(Frame $frame, int $score): Frame
     {
-        if ($frame->throw_one_score === 10) {
+        if ($frame->throw_one_score === 10 && $frame->frame_number !== 10) {
             return $frame;
         }
 
@@ -54,7 +54,7 @@ class FrameService
 
     public function setThrowThreeScore(Frame $frame, int $score): Frame
     {
-        if ($frame->throw_one_score + $frame->throw_two_score !== 10) {
+        if ($frame->throw_one_score + $frame->throw_two_score !== 10 && $frame->frame_number !== 10) {
             return $frame;
         }
 

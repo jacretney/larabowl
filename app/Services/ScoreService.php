@@ -61,6 +61,10 @@ class ScoreService
     {
         $score = new FrameScore();
 
+        if ($frame->frame_number === 10) {
+            return $this->calculateFinalFrameScore($frame);
+        }
+
         if ($frame->isStrike()) {
             $score->setIsStrike();
             $score->setOverallScore($this->calculateStrikeScore($frame));

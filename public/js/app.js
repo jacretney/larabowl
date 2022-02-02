@@ -19632,7 +19632,15 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentFrame: function currentFrame() {
       var incompleteFrames = this.game.frames.filter(function (frame) {
-        // Throw one wasn't a strike (or is null) and throw two is null
+        if (frame.frame_number === 10) {
+          // Didn't get a spare or a strike on their first throw
+          var isSpare = frame.throw_one_score + frame.throw_two_score === 10;
+          var isStrike = frame.throw_one_score === 10;
+          var thirdThrowComplete = frame.throw_three_score !== null;
+          return isSpare || isStrike || !thirdThrowComplete;
+        } // Throw one wasn't a strike (or is null) and throw two is null
+
+
         return frame.throw_one_score !== 10 && frame.throw_two_score === null;
       });
       return incompleteFrames[0];

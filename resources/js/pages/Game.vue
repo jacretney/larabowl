@@ -110,6 +110,15 @@ export default {
     computed: {
         currentFrame() {
             const incompleteFrames = this.game.frames.filter((frame) => {
+                if (frame.frame_number === 10) {
+                    // Didn't get a spare or a strike on their first throw
+                    const isSpare = frame.throw_one_score + frame.throw_two_score === 10;
+                    const isStrike = frame.throw_one_score === 10;
+                    const thirdThrowComplete = frame.throw_three_score !== null;
+
+                    return isSpare || isStrike || ! thirdThrowComplete;
+                }
+
                 // Throw one wasn't a strike (or is null) and throw two is null
                 return frame.throw_one_score !== 10 && frame.throw_two_score === null;
             });

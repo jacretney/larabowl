@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\GameResource;
-use App\Models\Frame;
 use App\Models\Game;
 use App\Services\GameService;
 use Illuminate\Http\JsonResponse;

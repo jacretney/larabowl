@@ -73,7 +73,7 @@ class ScoreServiceTest extends TestCase
             ]);
 
         $score = $this->scoreService->calculateStrikeScore($frame);
-        $this->assertEquals(15, $score);
+        $this->assertEquals(20, $score);
     }
 
     public function testCanCalculateStrikeScoreIfNextFrameIsStrike():void

@@ -40,7 +40,7 @@ class ScoreService
         }
 
         if ($frameTwo?->isSpare()) {
-            $scoreFromFrames += $frameTwo->throw_one_score;
+            $scoreFromFrames += $frameTwo->getScore();
         }
 
         if ($frameTwo && ! $frameTwo->isStrike() && ! $frameTwo->isSpare()) {

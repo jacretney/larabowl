@@ -78,7 +78,7 @@ class Frame extends Model
 
     public function getScore(): int
     {
-        return $this->throw_one_score + $this->throw_two_score;
+        return $this->throw_one_score + $this->throw_two_score + $this->throw_three_score;
     }
 
     /**

@@ -75,6 +75,6 @@ class FrameService
             return $this->scoreService->calculateSpareScore($frame);
         }
 
-        return $this->scoreService->calculcateScore($frame);
+        return $this->scoreService->calculateScore($frame);
     }
 }

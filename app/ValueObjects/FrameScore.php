@@ -46,10 +46,6 @@ class FrameScore
             throw new \DomainException('Score for a spare cannot be over 20');
         }
 
-        if (! $this->isSpare && ! $this->isStrike && $overallScore > 10) {
-            throw new \DomainException('Score cannot be over 10');
-        }
-
         $this->overallScore = $overallScore;
         return $this;
     }

@@ -14,11 +14,25 @@ class ScoreService
         $scoreFromFrames = 0;
 
         $frameOne = $frame;
-        /** @var null|Frame $frameTwo */
-        $frameTwo = Arr::get($nextFrames, 0);
 
-        /** @var null|Frame $frameThree */
-        $frameThree = Arr::get($nextFrames, 1);
+        if ($frame->frame_number === 9) {
+            // We need to treat the last bowl differently
+
+            /** @var null|Frame $nextFrame */
+            $nextFrame = Arr::get($nextFrames, 0);
+
+            $frameTwo = new Frame();
+            $frameThree = new Frame();
+
+            $frameTwo->throw_one_score = $nextFrame->throw_one_score;
+            $frameThree->throw_one_score = $nextFrame->throw_two_score;
+        } else {
+            /** @var null|Frame $frameTwo */
+            $frameTwo = Arr::get($nextFrames, 0);
+
+            /** @var null|Frame $frameThree */
+            $frameThree = Arr::get($nextFrames, 1);
+        }
 
         if ($frameTwo?->isStrike()) {
             $scoreFromFrames += $frameTwo->getScore();
@@ -43,7 +57,7 @@ class ScoreService
         return $frame->getScore() + $nextFrame?->throw_one_score;
     }
 
-    public function calculcateScore(Frame $frame): FrameScore
+    public function calculateScore(Frame $frame): FrameScore
     {
         $score = new FrameScore();
 
@@ -64,6 +78,22 @@ class ScoreService
         $score->setThrowOneScore($frame->throw_one_score);
         $score->setThrowTwoScore($frame->throw_two_score);
         $score->setThrowThreeScore($frame->throw_three_score);
+
+        return $score;
+    }
+
+    public function calculateFinalFrameScore(Frame $frame): FrameScore
+    {
+        $score = new FrameScore();
+
+        $score->setThrowOneScore($frame->throw_one_score);
+        $score->setThrowTwoScore($frame->throw_two_score);
+
+        if ($frame->isStrike() || $frame->isSpare()) {
+            $score->setThrowThreeScore($frame->throw_three_score);
+        }
+
+        $score->setOverallScore($score->throwOneScore + $score->throwTwoScore + $score->throwThreeScore);
 
         return $score;
     }

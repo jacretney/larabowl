@@ -19,7 +19,7 @@ class FrameResource extends JsonResource
     public function toArray($request = null): array
     {
         $scoreService = new ScoreService(); // There's probably a better way of doing this...
-        $frameScore = $scoreService->calculcateScore($this->resource);
+        $frameScore = $scoreService->calculateScore($this->resource);
 
         return [
             'id' => $this->id,

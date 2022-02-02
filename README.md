@@ -18,7 +18,7 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 - Bowl!
 
 ### Todo
-- Scores fall over when you get to Frame 10
+- ~~Scores fall over when you get to Frame 10~~
 - Need a way to add additional players
 - Need a way to see existing games
 - Statuses for games would be nice

@@ -106,8 +106,6 @@
                 axios.get('/api/games').then((response) => {
                     this.games.inProgress = response.data.data;
                     this.games.loaded = true;
-
-                    console.log(this.games);
                 });
             },
 

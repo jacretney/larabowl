@@ -1,7 +1,7 @@
 <template>
     <input
         @input="handleInput"
-        type="text"
+        :type="type"
         :class="{
             'border-red-500': this.validationMessage,
             'border-gray-400': !this.validationMessage,
@@ -9,6 +9,8 @@
         }"
         class="rounded-md"
         :placeholder="placeHolder"
+        v-model="value"
+        @keyup.enter="this.$emit('enter')"
     >
 
     <p v-if="this.validationMessage" class="text-red-500">{{ this.validationMessage }}</p>
@@ -18,7 +20,6 @@
 export default {
     props: {
         modelValue: {
-            type: String,
             default: null,
         },
         classes: {
@@ -32,19 +33,27 @@ export default {
         validationMessage: {
             type: String,
             default: null
+        },
+        type: {
+            type: String,
+            default: 'text'
         }
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'enter'],
 
     data () {
         return {
-            content: this.modelValue
+            value: this.modelValue
         }
     },
 
     methods: {
-        handleInput (e) {
+        handleInput(e) {
             this.$emit('update:modelValue', e.target.value)
+        },
+
+        reset() {
+            this.value = null;
         }
     }
 }

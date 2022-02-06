@@ -10,10 +10,10 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 ```
 
 - Pull the repo
-- Ensure docker is running and run `bash vendor/bin/sail up -d`
+- Ensure docker is running and run `bash sail up -d`
 - Run `sail install`
 - Run `npm install` - tested on Node 14.15.4
-- Run the migrations with `bash vendor/bin/sail migrate`
+- Run the migrations with `sail migrate`
 - Visit localhost
 - Bowl!
 

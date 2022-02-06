@@ -31,8 +31,11 @@
                 <Input
                     place-holder="Enter a score"
                     classes="w-full my-3"
+                    type="number"
                     :validation-message="scoreForm.score.error"
                     v-model="scoreForm.score.value"
+                    ref="submitScoreButton"
+                    v-on:enter="submitScore"
                 />
 
                 <Button text="Submit score" @click="submitScore" />
@@ -91,6 +94,8 @@ export default {
             })
             .then((response) => {
                 this.game.frames = response.data.data.frames;
+                this.scoreForm.score.value = null;
+                this.$refs.submitScoreButton.reset();
             })
         },
 

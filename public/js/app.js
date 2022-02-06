@@ -19521,7 +19521,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     modelValue: {
-      type: String,
       "default": null
     },
     classes: {
@@ -19535,17 +19534,24 @@ __webpack_require__.r(__webpack_exports__);
     validationMessage: {
       type: String,
       "default": null
+    },
+    type: {
+      type: String,
+      "default": 'text'
     }
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'enter'],
   data: function data() {
     return {
-      content: this.modelValue
+      value: this.modelValue
     };
   },
   methods: {
     handleInput: function handleInput(e) {
       this.$emit('update:modelValue', e.target.value);
+    },
+    reset: function reset() {
+      this.value = null;
     }
   }
 });
@@ -19641,6 +19647,9 @@ __webpack_require__.r(__webpack_exports__);
         'score': this.scoreForm.score.value
       }).then(function (response) {
         _this2.game.frames = response.data.data.frames;
+        _this2.scoreForm.score.value = null;
+
+        _this2.$refs.submitScoreButton.reset();
       });
     },
     getThrowNumber: function getThrowNumber(frame) {
@@ -19962,25 +19971,33 @@ __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var _hoisted_1 = ["placeholder"];
+var _hoisted_1 = ["type", "placeholder"];
 var _hoisted_2 = {
   key: 0,
   "class": "text-red-500"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  var _this = this;
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.handleInput && $options.handleInput.apply($options, arguments);
     }),
-    type: "text",
+    type: $props.type,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_defineProperty({
       'border-red-500': this.validationMessage,
       'border-gray-400': !this.validationMessage
     }, $props.classes, $props.classes), "rounded-md"]),
-    placeholder: $props.placeHolder
+    placeholder: $props.placeHolder,
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.value = $event;
+    }),
+    onKeyup: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+      return _this.$emit('enter');
+    }, ["enter"]))
   }, null, 42
   /* CLASS, PROPS, HYDRATE_EVENTS */
-  , _hoisted_1), this.validationMessage ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.validationMessage), 1
+  , _hoisted_1), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelDynamic, $data.value]]), this.validationMessage ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.validationMessage), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
   /* STABLE_FRAGMENT */
@@ -20114,14 +20131,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           ), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
             "place-holder": "Enter a score",
             classes: "w-full my-3",
+            type: "number",
             "validation-message": $data.scoreForm.score.error,
             modelValue: $data.scoreForm.score.value,
             "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
               return $data.scoreForm.score.value = $event;
-            })
+            }),
+            ref: "submitScoreButton",
+            onEnter: $options.submitScore
           }, null, 8
           /* PROPS */
-          , ["validation-message", "modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          , ["validation-message", "modelValue", "onEnter"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             text: "Submit score",
             onClick: $options.submitScore
           }, null, 8

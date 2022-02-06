@@ -18,7 +18,7 @@ class FrameControllerTest extends TestCase
                 'throw_two_score' => null,
             ]);
 
-        $response = $this->post(route('api.game.frame.set-score', [
+        $response = $this->post(route('api.games.frame.set-score', [
             'frame' => $frame->id,
             'game' => $frame->game->id,
         ]), [
@@ -46,7 +46,7 @@ class FrameControllerTest extends TestCase
             ]);
 
 
-        $response = $this->post(route('api.game.frame.set-score', [
+        $response = $this->post(route('api.games.frame.set-score', [
             'frame' => $frame->id,
             'game' => $frame->game->id,
         ]), [
@@ -73,7 +73,7 @@ class FrameControllerTest extends TestCase
                 'throw_two_score' => 2,
             ]);
 
-        $response = $this->post(route('api.game.frame.set-score', [
+        $response = $this->post(route('api.games.frame.set-score', [
             'frame' => $frame->id,
             'game' => $frame->game->id,
         ]), [

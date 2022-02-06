@@ -30,7 +30,7 @@
 
                 <Input
                     place-holder="Enter a score"
-                    classes="w-full mt-3"
+                    classes="w-full my-3"
                     :validation-message="scoreForm.score.error"
                     v-model="scoreForm.score.value"
                 />
@@ -78,14 +78,14 @@ export default {
 
     methods: {
         fetch() {
-            axios.get(`/api/game/${this.gameId}`)
+            axios.get(`/api/games/${this.gameId}`)
                 .then((response) => {
                     this.game = response.data.data;
                 });
         },
 
         submitScore() {
-            axios.post(`/api/game/${this.gameId}/frame/${this.currentFrame.id}`, {
+            axios.post(`/api/games/${this.gameId}/frame/${this.currentFrame.id}`, {
                 'throw': this.getThrowNumber(this.currentFrame),
                 'score': this.scoreForm.score.value,
             })

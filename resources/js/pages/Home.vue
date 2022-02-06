@@ -10,12 +10,37 @@
             <template v-slot:body>
                 <Input
                     place-holder="Jim's birthday"
-                    classes="w-full"
+                    classes="w-full mb-3"
                     :validation-message="gameForm.name.error"
                     v-model="gameForm.name.value"
                 />
 
                 <Button text="Create new game" @click="createGame" />
+            </template>
+        </Card>
+
+        <Card classes="w-1/2 m-auto">
+            <template v-slot:header>
+                Other games
+            </template>
+            <template v-slot:body>
+                <LoadingSpinner
+                    class="m-auto"
+                    :loading="! games.loaded"
+                    message="Fetching games..."
+                />
+
+                <div
+                    class="columns-2 my-3"
+                    v-for="game in games.inProgress"
+                    :key="game.id"
+                >
+                    <p class="w-full">
+                        {{game.name}}
+                    </p>
+
+                    <Button text="View game" classes="w-full" @click="viewGame(game)"/>
+                </div>
             </template>
         </Card>
     </MainContent>
@@ -28,6 +53,7 @@
     import Input from "../components/ui/Input";
     import Button from "../components/ui/Button";
     import Card from "../components/ui/Card";
+    import LoadingSpinner from "../components/ui/LoadingSpinner";
 
     export default {
         components: {
@@ -36,6 +62,7 @@
             Input,
             Button,
             Card,
+            LoadingSpinner,
         },
 
         data() {
@@ -46,7 +73,15 @@
                         error: null,
                     },
                 },
+                games: {
+                    loaded: false,
+                    inProgress: null,
+                },
             }
+        },
+
+        mounted() {
+            this.fetchGames();
         },
 
         methods: {
@@ -58,11 +93,26 @@
 
                 this.gameForm.name.error = null;
 
-                axios.post('/api/game/', {
+                axios.post('/api/games/', {
                     name: this.gameForm.name.value,
                 }).then((response) => {
                     this.$router.push(`/game/${response.data.data.id}`);
                 }).finally();
+            },
+
+            fetchGames() {
+                this.games.loaded = false;
+
+                axios.get('/api/games').then((response) => {
+                    this.games.inProgress = response.data.data;
+                    this.games.loaded = true;
+
+                    console.log(this.games);
+                });
+            },
+
+            viewGame(game) {
+                this.$router.push(`/game/${game.id}`);
             }
         }
     }

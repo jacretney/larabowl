@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
 use App\Services\GameService;
@@ -27,5 +28,12 @@ class GameController extends Controller
     public function get(Game $game): JsonResponse
     {
         return $this->respond(new GameResource($game));
+    }
+
+    public function getAll(): JsonResponse
+    {
+        $games = $this->gameService->getAllGames();
+
+        return $this->respond(new GameCollection($games));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Game;
+use Illuminate\Support\Collection;
 
 class GameService
 {
@@ -21,5 +22,10 @@ class GameService
         $this->frameService->generateFramesForGame($game);
 
         return $game;
+    }
+
+    public function getAllGames(): Collection
+    {
+        return Game::all();
     }
 }

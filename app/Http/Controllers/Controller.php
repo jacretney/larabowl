@@ -16,7 +16,7 @@ class Controller extends BaseController
     protected function respond(?JsonResource $data = null, int $code = 200): JsonResponse
     {
         return response()->json([
-            'data' => $data?->toArray(),
+            'data' => $data?->toArray(request()),
         ], $code);
     }
 }

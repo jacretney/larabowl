@@ -12,7 +12,7 @@ class GameControllerTest extends TestCase
     {
         $game = Game::factory()->create();
 
-        $response = $this->get(route('api.game.get', [
+        $response = $this->get(route('api.games.get', [
             'game' => $game->id,
         ]));
 
@@ -25,7 +25,7 @@ class GameControllerTest extends TestCase
 
     public function testCanCreateAGame():void
     {
-        $response = $this->post(route('api.game.create'), [
+        $response = $this->post(route('api.games.create'), [
             'name' => 'A cool game',
         ]);
 
@@ -34,5 +34,17 @@ class GameControllerTest extends TestCase
                 'name' => 'A cool game',
             ])
             ->assertJsonCount(10, 'data.frames');
+    }
+
+    public function testCanGetAllGames():void
+    {
+        Game::factory()
+            ->count(10)
+            ->create();
+
+        $response = $this->get(route('api.games.all'));
+
+        $response
+            ->assertJsonCount(10, 'data');
     }
 }

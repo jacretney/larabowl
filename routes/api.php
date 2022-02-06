@@ -24,9 +24,10 @@ Route::group([
     'as' => 'api.',
 ], function() {
     Route::group([
-        'as' => 'game.',
-        'prefix' => 'game',
+        'as' => 'games.',
+        'prefix' => 'games',
     ], function() {
+        Route::get('/', [GameController::class, 'getAll'])->name('all');
         Route::get('/{game}', [GameController::class, 'get'])->name('get');
         Route::post('/', [GameController::class, 'create'])->name('create');
 
